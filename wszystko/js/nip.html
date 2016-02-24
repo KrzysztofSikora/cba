@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<form name="NIP_Formularz" method="post">
+    <input type="text" name="NIP_Pole" />  <input type="submit" id="NIP_Przycisk" value="Sprawdź" />
+    <div id="NIP_Komunikat">Wpisz NIP (format: 1234567891)</div>
+</form>
+<script type="text/javascript">
+    var _nip_komunikat = document.getElementById("NIP_Komunikat");
+    var _nip_sprawdz = document.getElementById("NIP_Przycisk");
+    _nip_sprawdz.onclick = F_NIP;
+    function F_NIP() {
+        var NIP = document.NIP_Formularz.NIP_Pole.value;
+        // var NIP = document.forms["NIP_Formularz"]["NIP_Pole"].value; // zamiennie
+        if (NIP == null || NIP == "") { _nip_komunikat.innerHTML = "Brak NIP"; }
+        else if (NIP == "1234567890") { _nip_komunikat.innerHTML = "NIP niepoprawny"; } // obsluga wyjatku
+        else {
+            NIP = NIP.replace(/[\s-]/g, "");
+            var CyfraKontrolna = parseInt(NIP.charAt(9));
+            var TablicaWag = [6, 5, 7, 2, 3, 4, 5, 6, 7];
+            if (NIP.length == 10 && parseInt(NIP, 10) > 0) {
+                var SumaKontrolna = 0;
+                for(var i = 0; i<9; i++) {
+                    SumaKontrolna += parseInt(NIP.charAt(i)) * TablicaWag[i];
+                }
+                var WynikKontrolnyModulo = SumaKontrolna % 11;
+                var ResztaKontrolna = (WynikKontrolnyModulo == 10)?0:WynikKontrolnyModulo;
+                if (ResztaKontrolna == CyfraKontrolna) { _nip_komunikat.innerHTML = "NIP poprawny"; }
+                else { _nip_komunikat.innerHTML = "NIP niepoprawny"; };
+            }
+            else { _nip_komunikat.innerHTML = "NIP niepoprawny"; };
+        };
+        return false;
+    };
+</script>
+</body>
+</html>

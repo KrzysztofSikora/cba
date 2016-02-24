@@ -1,0 +1,72 @@
+<html>
+
+<body>
+<button id="buttonInsert" onClick="addRow()">
+    DODAJ ROW
+</button>
+
+<button id="buttonChangeCellDescription" onClick="modifyCell()">
+    zmien zawartosc komórki
+</button>
+
+<form>
+    <input type="text" id="cellNumber" >numer komorki</input><br>
+    <input type="text" id="rowNumber" >numer wiersza</input>
+</form>
+<br>
+<p id="errorShow"></p>
+
+<table id="table1" style="border-style:solid">
+    <tr>
+        <td>
+    <tr>
+</table>
+
+
+</body>
+
+
+</html>
+
+<script>
+    var rowAmount=0;
+    function modifyCell(){
+
+        var cellnumber = document.getElementById("cellNumber").value;
+        var rowNumber = document.getElementById("rowNumber").value;
+        var cell = document.getElementById("row"+rowNumber+"cell"+cellnumber);
+        cell.innerHTML = "GOWNO KURWA";
+
+
+    }
+
+
+
+    function addRow(){
+        var table = document.getElementById("table1");
+
+
+        if(rowAmount==null){
+            rowAmount=0;
+        }else if(rowAmount==0){
+            rowAmount++;
+        }else{
+            rowAmount++;
+        }
+
+
+        var row= table.insertRow(0)
+        var showAmount = document.getElementById("errorShow");
+        showAmount.innerHTML = "row amount "+rowAmount;
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.id ="row"+rowAmount+"cell1";
+        cell2.id ="row"+rowAmount+"cell2";
+
+        cell1.innerHTML = "NEW CELL1";
+        cell2.innerHTML = "NEW CELL2";
+
+
+    }
+</script>

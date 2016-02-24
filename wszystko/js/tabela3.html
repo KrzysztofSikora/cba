@@ -1,0 +1,48 @@
+<DOCTYPE html>
+<html>
+<body>
+
+<table id="mojaTabela" border="1">
+<tr><td>X</td></tr>
+</table><br>
+<input type="button" value="dodajWiersz" onclick="javascript:wstawWiersz()"/>
+<input type="button" value="dodajKolumne" onclick="javascript:wstawKolumne()"/>
+<script type="text/javascript">
+function wstawWiersz(){
+    var tbl= document.getElementById('mojaTabela');
+    var wiersz = tbl.insertRow(tbl.rows.length);
+    var lastRow = tbl.rows.length;
+    var i;
+    
+    for (i=0; i<tbl.rows[0].cells.length; i++){
+        if (i==0){
+            dodajKomorke (wiersz.insertCell(i),lastRow-1,'wiersz');
+        }else{
+            dodajKomorke (wiersz.insertCell(i),0,'wiersz');
+        }
+    }
+}
+function dodajKomorke(cell,text,style){
+    var div = document.createElement('div');
+    var txt = document.createTextNode(text);
+    div.appendChild(txt);
+    cell.appendChild(div);
+}
+var j=0;
+function wstawKolumne(){
+    var tbl = document.getElementById('mojaTabela'),
+            i;
+        for (i=0; i<tbl.rows.length; i++){
+            if (i==0){
+                dodajKomorke(tbl.rows[i].insertCell(tbl.rows[i].cells.length),(tbl.rows[i].cells.length)-1,'col');
+                }else {
+                dodajKomorke(tbl.rows[i].insertCell(tbl.rows[i].cells.length),0,'col');
+                }
+        }
+}
+
+
+</script>
+
+</body>
+</html>

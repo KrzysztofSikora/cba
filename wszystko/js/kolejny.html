@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="pl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <title>Moja strona WWW</title>
+    <script type="text/javascript">
+
+        function przetwarzaj_dane ()
+
+        {
+            var brakuje_danych=false;
+            var formularz=document.forms[0];
+
+            var napis="";
+
+            if (formularz.imie.value == ""){
+                napis += "imię\n"
+                brakuje_danych=true;
+
+            }
+            if (formularz.nazwisko.value == ""){
+                napis += "nazwisko\n"
+                brakuje_danych=true;
+
+            }
+            if (formularz.kraj.value == ""){
+
+                napis += "kraj\n"
+                brakuje_danych=true;
+            }
+            if (formularz.tel.value == ""){
+                napis += "telefon\n"
+                brakuje_danych=true;
+            }
+            if (!brakuje_danych)
+                formularz.submit();
+            else
+                alert ("Nie wypełniłeś następujących pól:\n" + napis);
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<form name="formularz1" action="index.php" method="get">
+    <div>
+        Proszę podać swoje dane:
+        <br />
+        <i>(Pola oznaczone * muszą zostać wypełnione)</i>
+        <br /><br />
+    </div>
+    <table>
+        <tr>
+            <td><b>Dane personalne:</b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>imię:</td>
+            <td><input type="text" name="imie">*</td>
+        </tr>
+        <tr>
+            <td>nazwisko:</td>
+            <td><input type="text" name="nazwisko">*</td>
+        </tr>
+        <tr>
+            <td><B>Adres:</B></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ulica:</td>
+            <td><input type="text" name="ulica"></td>
+        </tr>
+        <tr>
+            <td>nr domu:</td>
+            <td><input type="text" name="nrdomu"></td>
+        </tr>
+        <tr>
+            <td>kod:</td>
+            <td><input type="text" name="kod"></td>
+        </tr>
+        <tr>
+            <td>miasto:</td>
+            <td><input type="text" name="miasto"></td>
+        </tr>
+        <tr>
+            <td>kraj:</td>
+            <td><input type="text" name="kraj">*</td>
+        </tr>
+
+        <tr>
+            <td>tel.:</td>
+            <td><input type="text" name="tel">*</td>
+
+        </tr>
+        <tr>
+            <td></td>
+            <td align="center">
+                <input type="button" name="wyslij" value="Wyślij!" onClick="przetwarzaj_dane()">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
+

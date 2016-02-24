@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+
+
+
+     //
+
+     var button = document.getElementById('button');
+
+     button.addEventListener('click', function(e) {
+         var textBox = document.getElementById('textBox');
+
+         if (textBox.value.match(/^TEST$/) == null) {
+             e.preventDefault;
+             textBox.setCustomValidity('Powinieneś napisać TEST!');
+         } else {
+             textBox.setCustomValidity('');
+         }
+     });
+
+
+///
+    </script>
+
+
+
+</head>
+
+
+
+
+
+<body>
+<form action="#">
+    <input id="textBox" type="text" placeholder="Napisz TEST"/>
+    <input id="button" type="submit" value="Zatwierdź" />
+</form>
+
+</body>
+</html>

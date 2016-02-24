@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        var licznik = 1;
+        function myFunction() {
+            var table = document.getElementById("tabela");
+            var row = table.insertRow();
+            var cell1 = row.insertCell();
+            cell1.id = "cell" + licznik;
+            cell1.innerHTML = "NEW CELL1 ROW1";
+            licznik++;
+
+        }
+
+    </script>
+
+</head>
+<body>
+
+
+<table border='2px' id="tabela">
+
+</table>
+<br>
+<input type="text" placeholder="Wartosc" id="wartosc"/><br><br>
+<input type="text" placeholder="cell + cyfra" id="id"/>
+<input type="submit" value="Dodaj" onclick="myFunction()"/>
+<input type="submit" value="Zmien napis" onclick="napis()"/>
+<input type="submit" value="Row" onclick="addRow()"/>
+
+
+</body>
+</html>

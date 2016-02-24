@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+    <TITLE> New Document </TITLE>
+    <META NAME="Author" CONTENT="">
+    <script LANGUAGE="JavaScript">
+
+        function ukryjtab(id) {
+
+            var element = document.getElementById(id);
+            while (element.firstChild) {
+                element.removeChild(element.firstChild);
+            }
+        }
+
+        function dodajtab(id) {
+
+            var element = document.getElementById(id);
+            var tbl     = document.createElement("table");
+            var tblBody = document.createElement("tbody");
+
+            for (var j = 0; j < 2; j++) {
+                var row = document.createElement("tr");
+                for (var i = 0; i < 2; i++) {
+
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode("komórka nr: "+j+", kolumna nr: "+i);
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                }
+                tblBody.appendChild(row);
+            }
+
+            tbl.appendChild(tblBody);
+            element.appendChild(tbl);
+            tbl.setAttribute("border", "1");
+        }
+
+    </SCRIPT>
+</HEAD>
+
+<BODY>
+<TABLE border="1">
+    <TR>
+        <TD>fiat stilo</TD>
+        <TD>1,6</TD>
+        <TD><input type="button" name="wybor" value="pokaz" onClick="dodajtab(2)"><input type="button" name="wybor" value="ukryj" onClick="ukryjtab(2)"></TD>
+    </TR>
+    <TR>
+        <TD colspan="3" id="2"></TD>
+    </TR>
+    <TR>
+        <TD>fiat panda</TD>
+        <TD>1,1</TD>
+        <TD>j</TD>
+    </TR>
+</TABLE>
+</BODY>
+</HTML>
