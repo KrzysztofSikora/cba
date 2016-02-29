@@ -48,8 +48,8 @@ class Users
         echo <<< ENT_DISALLOWED
             Zaloguj się.
 <form action="index_unknow.php" method="post">
-    <input type="text" name="login" placeholder="Login" required/><br><br>
-    <input type="text" name="password" placeholder="Hasło" required/><br><br>
+    <input type="text" name="login" placeholder="Login" /><br><br>
+    <input type="text" name="password" placeholder="Hasło" /><br><br>
     <input type="submit" name="log" value="Zaloguj"/>
 </form>
 <br>S
@@ -68,57 +68,71 @@ ENT_DISALLOWED;
 
     }
 
-    function login($login, $password) {
+    function login($name, $password) {
 
-        //echo "$login";
-        //echo "$password";
-        $query = $this -> db->query("SELECT * from `users` WHERE `login` like '$login' and `password` like '$password'");
+        $this->validateLogin($name, $password);
+        echo "$name";
+        echo "$password";
+
+        $query = $this -> db->query("SELECT `login`, `password`, `userID` from `users` WHERE `login` like '$name' and `password` like '$password'");
         $query = $query->fetch_assoc();
         $id = $query['userID'];
+        $name_ = $query['login'];
+        $password_ = $query['password'];
+
+        echo "$name_";
+        echo "$password_";
 
         return $id;
     }
 
+
     function registry($name, $surname, $email, $login, $password, $password2) {
 
-        if($this->validate($name, $surname, $email, $login, $password, $password2)) {
+        if($this->validateRegistry($name, $surname, $email, $login, $password, $password2)) {
 
-            $this->db->query("INSERT INTO `users` VALUES ('NULL', '$name', '$surname', '$email', '$login', '$password', 'kod')");
+            $code = md5(mt_rand()); //generowanie kodu aktywacyjnego
+
+            $this->db->query("INSERT INTO `users` VALUES ('NULL', '$name', '$surname', '$email', '$login', '$password', '$code')");
+            // wysylanie meila na poczte
+            $this->sendActivate($code, $login, $email);
+
         } else {
             echo "Rejestracja nie mozliwa.";
         }
 
     }
-    function validate($name, $surname, $email, $login, $password, $password2) {
+    function validateRegistry($name, $surname, $email, $login, $password, $password2) {
 
-        $flaga = 1;
+        // walidacja danych
+        $flag = 1;
 
-        if (preg_match('/^[A-Z][a-z]+$/', $name)) {
+        if (preg_match('/^[A-ZĄĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$/', $name)) {
             echo("Imie ok <br>");
         } else {
             echo("Imie error <br>");
-            $flaga = 0;
+            $flag = 0;
         }
 
-        if (preg_match('/^[A-Z][a-z]+$/', $surname)) {
+        if (preg_match('/^[A-ZĄĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$/', $surname)) {
             echo("Nazwisko ok <br>");
         } else {
             echo("Nazwisko error <br>");
-            $flaga = 0;
+            $flag = 0;
         }
 
         if (preg_match('/^[A-Za-z]+@[A-Za-z]+.[A-Za-z]+$/', $email)) {
             echo("Email ok <br>");
         } else {
             echo("Email error <br>");
-            $flaga = 0;
+            $flag = 0;
         }
 
         if (preg_match('/^[0-9A-Za-z]+$/', $login)) {
             echo("Login ok <br>");
         } else {
             echo("Login error <br>");
-            $flaga = 0;
+            $flag = 0;
         }
 
         if($password === $password2) {
@@ -126,19 +140,109 @@ ENT_DISALLOWED;
                 echo("Haslo ok <br>");
             } else {
                 echo("Haslo error <br>");
-                $flaga = 0;
+                $flag = 0;
             }
         } else {
             echo ("Hasla sie roznia <br>");
-            $flaga = 0;
+            $flag = 0;
         }
-// jeszcze ma sprawdzić czy jest w bazie
-        if($flaga === 1) {
+
+        // sprawdzanie loginu
+        $tabLogin = $this->db->query("SELECT * FROM `users` WHERE `login` LIKE '$login'");
+
+        $tabLogin = $tabLogin -> fetch_assoc();
+
+        if(!empty($tabLogin)) {
+            echo ("Login zajety");
+            $flag = 0;
+        }
+        // sprawdzanie meila
+        $tabEmail = $this->db->query("SELECT * FROM `users` WHERE `email` LIKE '$email'");
+        $tabEmail = $tabEmail -> fetch_assoc();
+
+        if(!empty($tabEmail)) {
+            echo ("Meil zajety");
+            $flag = 0;
+        }
+
+
+        if($flag === 1) {
             return true;
         } else {
             return false;
         }
 
     }
+
+    function validateLogin($name, $password) {
+        $flag = 1;
+
+
+        if (preg_match('/^[A-ZĄĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$/', $name)) {
+            echo("Imie ok <br>");
+        } else {
+            echo("Imie error <br>");
+            $flag = 0;
+        }
+
+
+        if (preg_match('/^[0-9A-Za-z]{6,}$/', $password)) {
+            echo("Haslo ok <br>");
+        } else {
+            echo("Haslo error <br>");
+            $flag = 0;
+        }
+
+        // sprawdzic czy są w bazie
+
+
+
+
+        if($flag === 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+    function sendActivate($code, $login, $email) {
+
+        $email_template = "templates/email_template.html";
+        $message = file_get_contents($email_template);
+        $message = str_replace("[login]", $login, $message);
+        $message = str_replace("[key]", $code, $message);
+        $message = str_replace("[url]", "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'], $message);
+        $header = 'From listdlakrzycha@gmail.com' . "\r\n" .
+            'Reply-To: listdlakrzycha@gmail.com'. "\r\n" .
+            'Content-type: text/html; charset=utf-8' . "\r\n";
+
+        mail($email, "Aktywacja konta " . $email, $message, $header);
+
+        echo "Email wysłany";
+    }
+
+    function userActivate($activate) {
+        $code = $activate;
+        if(isset($code)) {
+
+
+
+            $tabCode = $this->db->query("SELECT `code` FROM  `users` WHERE  `code` LIKE '$code' ");
+
+            $tabCode = $tabCode->fetch_assoc();
+
+
+            // nie ma takiego uzytkownika o takim kodzie;
+            if(empty($tabCode)) {
+                echo ("Nie ma użytkownika o takim kodzie");
+
+            } else {
+                $this ->db->query("UPDATE `users` SET `code` = 'active' WHERE `code` = '$code'");
+                echo "Potwierdzona rejestracja";
+            }
+
+        }
+    }
+
 
 }

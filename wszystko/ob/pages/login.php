@@ -5,15 +5,6 @@
  * Date: 26.02.16
  * Time: 16:39
  */
-
-// dodaje
-session_save_path('session/');
-session_start();
-$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
-
-echo $_SESSION['ip'];
-
-// dodaje
 include 'src/Users.php';
 
 echo "index_unknow.php <br>";
@@ -33,8 +24,5 @@ if(isset($_POST['log'])) {
 if(isset($_POST['reg'])) {
     $uzytkownik->registry($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['login'], $_POST['password'], $_POST['password2']);
 }
-
-$uzytkownik->userActivate($_GET['activate']);
-
 
 ?>
