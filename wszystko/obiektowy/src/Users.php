@@ -68,22 +68,16 @@ ENT_DISALLOWED;
 
     }
 
-    function login($name, $password) {
+    function login($login, $password) {
 
-        $this->validateLogin($name, $password);
-        echo "$name";
-        echo "$password";
 
-        $query = $this -> db->query("SELECT `login`, `password`, `userID` from `users` WHERE `login` like '$name' and `password` like '$password'");
-        $query = $query->fetch_assoc();
-        $id = $query['userID'];
-        $name_ = $query['login'];
-        $password_ = $query['password'];
+        if($this->validateLogin($login, $password)) {
+            $query = $this -> db->query("SELECT `login`, `password`, `userID` from `users` WHERE `login` like '$login' and `password` like '$password'");
+            $query = $query->fetch_assoc();
+            $id = $query['userID'];
 
-        echo "$name_";
-        echo "$password_";
-
-        return $id;
+            return $id;
+        }
     }
 
 
@@ -174,14 +168,14 @@ ENT_DISALLOWED;
 
     }
 
-    function validateLogin($name, $password) {
+    function validateLogin($login, $password) {
         $flag = 1;
 
 
-        if (preg_match('/^[A-ZĄĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$/', $name)) {
-            echo("Imie ok <br>");
+        if (preg_match('/^[a-zA-Z][a-zA-Z]+$/', $login)) {
+            echo("Login ok <br>");
         } else {
-            echo("Imie error <br>");
+            echo("Login error <br>");
             $flag = 0;
         }
 
@@ -195,7 +189,24 @@ ENT_DISALLOWED;
 
         // sprawdzic czy są w bazie
 
+        $tabLogin = $this->db->query("SELECT * FROM `users` WHERE `login` LIKE '$login'");
 
+        $tabLogin = $tabLogin -> fetch_assoc();
+
+        if(empty($tabLogin)) {
+            echo ("Nie ma takiego loginu w bazie.");
+            $flag = 0;
+        }
+
+
+        $tabPassword = $this->db->query("SELECT * FROM `users` WHERE `password` LIKE '$password'");
+
+        $tabPassword = $tabPassword -> fetch_assoc();
+
+        if(empty($tabPassword)) {
+            echo ("Błędne hasło.");
+            $flag = 0;
+        }
 
 
         if($flag === 1) {
