@@ -11,7 +11,8 @@
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous">
 
 </script>
-
+<html>
+<body>
 
 <?php
 /**
@@ -66,6 +67,12 @@ $product = new Products();
 
 //echo $product->showImage(66);
 
-$product->paginationProto(10,5);
+
+$product->showProduct(0,5);
+$product->paginationProto($product->counter(),$product->counter()/2);
+echo $product->counter();
+
 
 ?>
+</body>
+</html>

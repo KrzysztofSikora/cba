@@ -87,6 +87,8 @@ ENT_DISALLOWED;
     }
 
     function paginationProto($volume, $volOnPage) {
+
+        //10, 5
         $numbPages = $volume/$volOnPage;
         echo <<< ENT_DISALLOWED
 
@@ -116,8 +118,32 @@ ENT_DISALLOWED;
 
 ENT_DISALLOWED;
 
+    }
 
+    function showProduct($min, $max) {
 
+       echo "<div style=\"float: left; padding: 6%\">";
+       echo "<table border=2px>";
 
+        foreach($this->db->query("SELECT * FROM `products` LIMIT $min, $max") as $result) {
+            echo "<tr>";
+            echo "<td>" . $result['productID'] ."</td>";
+            echo "<td>" .$result['productName']."</td>";
+            echo "<td>" .$result['category']."</td>";
+            echo "<td>" .$result['quantity']."</td>";
+            echo "<td>" . $result['price']."</td>";
+            echo "<td>".'<img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'" height="120" width="120"/>'."</td>";
+            echo "<td>" .$result['description']."</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+        echo "</div>";
+    }
+
+    function counter() {
+        $result = $this->db->query("SELECT count(productID) FROM `products`");
+        $result =mysqli_fetch_assoc($result);
+
+        return $result['count(productID)'];
     }
 }
