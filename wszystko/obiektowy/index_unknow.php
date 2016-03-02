@@ -15,26 +15,42 @@ echo $_SESSION['ip'];
 
 // dodaje
 include 'src/Users.php';
+include 'src/Products.php';
 
-echo "index_unknow.php <br>";
+//echo "index_unknow.php <br>";
+//
+//$uzytkownik = new Users();
+//
+//echo "Metoda wypisz(): <br>";
+//echo $uzytkownik->write();
+//$uzytkownik->writeAll();
+//
+//// logowanie
+//$uzytkownik->writeForm();
+//if(isset($_POST['log'])) {
+//    echo $uzytkownik->login($_POST['login'], $_POST['password']);
+//}
+//
+//if(isset($_POST['reg'])) {
+//    $uzytkownik->registry($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['login'], $_POST['password'], $_POST['password2']);
+//}
+//
+//$uzytkownik->userActivate($_GET['activate']);
+//echo "<br><br><br> Klasa produkty <br>_____________________<br>";
+////////////////// Produkty
+$product = new Products();
 
-$uzytkownik = new Users();
+$product->writeForm();
+//$product->writeAll();
 
-echo "Metoda wypisz(): <br>";
-echo $uzytkownik->write();
-$uzytkownik->writeAll();
 
-// logowanie
-$uzytkownik->writeForm();
-if(isset($_POST['log'])) {
-    echo $uzytkownik->login($_POST['login'], $_POST['password']);
-}
 
-if(isset($_POST['reg'])) {
-    $uzytkownik->registry($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['login'], $_POST['password'], $_POST['password2']);
-}
+$product->addProduct($_POST['insertProduct'],$_FILES['file_upload'], $_POST['productName'], $_POST['category'],
+    $_POST['quantity'], $_POST['price'], $_POST['desc']);
 
-$uzytkownik->userActivate($_GET['activate']);
+//$product->protoAdd($_POST['insertProduct'],$_FILES['file_upload'], $_POST['productName'], $_POST['category'],
+//    $_POST['quantity'], $_POST['price'], $_POST['desc']);
+
 
 
 ?>

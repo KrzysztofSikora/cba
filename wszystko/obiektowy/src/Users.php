@@ -44,7 +44,7 @@ class Users
     }
 
     function writeForm() {
-
+            /// dodać action form gdzie wyświetlany jest formularz
         echo <<< ENT_DISALLOWED
             Zaloguj się.
 <form action="index_unknow.php" method="post">

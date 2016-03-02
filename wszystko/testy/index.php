@@ -18,9 +18,9 @@ require "Obraz.php";
 //$product = new Product();
 //$product ->wyswietl();
 
-$obraz = new Product();
-$obraz ->writeAll();
-
-$obraz ->writeProduct(9);
+//$obraz = new Product();
+//$obraz ->writeAll();
+//
+//$obraz ->writeProduct(9);
 
 ?>
