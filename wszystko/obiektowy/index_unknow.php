@@ -67,11 +67,14 @@ $product = new Products();
 
 //echo $product->showImage(66);
 
+$page = $_GET['page'];
 
+//0, 5 -> 5. 10    //i, i+5 -> i, i+5
 $product->showProduct(0,5);
 $product->paginationProto($product->counter(),$product->counter()/2);
-echo $product->counter();
 
+echo $product->counter();
+echo $page;
 
 ?>
 </body>
