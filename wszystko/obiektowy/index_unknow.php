@@ -1,3 +1,18 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+      integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous">
+
+</script>
+
+
 <?php
 /**
  * Created by PhpStorm.
@@ -39,18 +54,18 @@ include 'src/Products.php';
 //echo "<br><br><br> Klasa produkty <br>_____________________<br>";
 ////////////////// Produkty
 $product = new Products();
-
-$product->writeForm();
-//$product->writeAll();
-
-
-
-$product->addProduct($_POST['insertProduct'],$_FILES['file_upload'], $_POST['productName'], $_POST['category'],
-    $_POST['quantity'], $_POST['price'], $_POST['desc']);
-
-//$product->protoAdd($_POST['insertProduct'],$_FILES['file_upload'], $_POST['productName'], $_POST['category'],
-//    $_POST['quantity'], $_POST['price'], $_POST['desc']);
+//
+//$product->writeForm();
+////$product->writeAll();
+//
+//
+//
+//$product->addProduct($_POST['insertProduct'],$_FILES['file_upload'], $_POST['productName'], $_POST['category'],
+//    $_POST['quantity'], $_POST['price'], $_POST['description']);
 
 
+//echo $product->showImage(66);
+
+$product->paginationProto(10,5);
 
 ?>

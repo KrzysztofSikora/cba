@@ -96,7 +96,7 @@ ENT_DISALLOWED;
         }
 
     }
-    function validateRegistry($name, $surname, $email, $login, $password, $password2) {
+    private function validateRegistry($name, $surname, $email, $login, $password, $password2) {
 
         // walidacja danych
         $flag = 1;
@@ -168,7 +168,7 @@ ENT_DISALLOWED;
 
     }
 
-    function validateLogin($login, $password) {
+    private function validateLogin($login, $password) {
         $flag = 1;
 
 

@@ -15,7 +15,7 @@ class Products
     public $price;
     public $image;
     public $imgName;
-    public $desc;
+    public $description;
     public $db;
 
     function __construct()
@@ -52,7 +52,7 @@ class Products
     <input type="text" name="category" placeholder="Kategoria"/><br><br>
     <input type="number" name="quantity" placeholder="Ilość"/><br><br>
     <input type="number" name="price" placeholder="Cena"/><br><br>
-    <input type="text" name="desc" placeholder="Opis"/><br><br>
+    <input type="text" name="description" placeholder="Opis"/><br><br>
     <input type="file" size="32" name="file_upload" value=""><br><br>
     <input type="submit" name="insertProduct" value="Dodaj produkt"/>
 </form>
@@ -61,36 +61,63 @@ ENT_DISALLOWED;
 
     }
 
-    function addProduct($insertProduct, $file_upload, $productName, $category, $quantity, $price, $desc)
+
+    function addProduct($insertProduct, $file_upload, $productName, $category, $quantity, $price, $description)
     {
 
-        echo $insertProduct, $file_upload, $productName, $category, $quantity, $price, $desc;
-        print_r($file_upload);
+        // validate()
 
+        $f = $file_upload;
+        $imgName = $f['name'];
 
-            $f = $file_upload;
-            if (isset($f['name'])) {
-
-                move_uploaded_file($f['tmp_name'],
-                    $_SERVER['DOCUMENT_ROOT'].'/wszystko/obiektowy/images/'.$f['name']);
-            }
-
-
-            $imgName = $f['name'];
-            $fp = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/wszystko/obiektowy/images/'. $imgName);
-            echo file_get_contents($_SERVER['DOCUMENT_ROOT'].'/wszystko/obiektowy/images/'. $imgName);
-
-            print_r($fp);
-        $this->db->query("INSERT INTO `products` (productID) VALUES ( '$fp')");
-
-
+        $image = addslashes(file_get_contents($file_upload['tmp_name']));
+        //you keep your column name setting for insertion. I keep image type Blob.
+        $query = "INSERT INTO products (productID, productName, category, quantity, price, image, imgName, description)
+                    VALUES('', '$productName', '$category', '$quantity', '$price', '$image', '$imgName', '$description')";
+        mysqli_query($this->db, $query);
 
     }
 
-    function protoAdd($insertProduct, $file_upload, $productName, $category, $quantity, $price, $desc)
-    {
-        echo "$insertProduct, $file_upload, $productName, $category, $quantity, $price, $desc";
-        //     $this->db->query("INSERT INTO `products` VALUES ('NULL', '$productName', '$category', '$quantity', '$price', NULL, NULL, '$desc')");
-        $this->db->query("INSERT INTO `products` VALUES ('NULL', '$productName', '$category', '$quantity', '$price', 'null', 'null', '$desc')");
+    function showImage($productID) {
+
+        $sql = "SELECT * FROM products WHERE productID = '$productID'";
+        $sth = $this->db->query($sql);
+        $result=mysqli_fetch_array($sth);
+        return '<img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'"/>';
+    }
+
+    function paginationProto($volume, $volOnPage) {
+        $numbPages = $volume/$volOnPage;
+        echo <<< ENT_DISALLOWED
+
+            <nav>
+    <ul class="pagination">
+        <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+ENT_DISALLOWED;
+        for($i=1; $i<=$numbPages; $i++) {
+//            echo "$i <br>";
+
+
+        echo '<li><a href="'.'?page='.$i  .'">'.$i.'</a></li>';
+
+        }
+            echo <<< ENT_DISALLOWED
+            <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+ENT_DISALLOWED;
+
+
+
+
     }
 }
