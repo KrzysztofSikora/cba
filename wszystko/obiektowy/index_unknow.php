@@ -13,7 +13,19 @@
 </script>
 <html>
 <body>
-
+<div class="container">
+<div class="header clearfix">
+    <nav>
+        <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">Home</a></li>
+            <li role="presentation"><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">About</a></li>
+            <li role="presentation"><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">Contact</a></li>
+        </ul>
+    </nav>
+    <h3 class="text-muted">Project name</h3>
+</div>
+<div class="container">
+    <div class="jumbotron">
 <?php
 /**
  * Created by PhpStorm.
@@ -66,8 +78,11 @@ $product = new Products();
 
 
 //echo $product->showImage(66);
+$page = 1;
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
 
-$page = $_GET['page'];
 
 echo "<br>$page<br>";
 echo $product->cutterMin($page);
@@ -80,7 +95,9 @@ echo $product->cutterMax($page);
 //$product->showProduct(0,5);
 
 $product->showProduct($product->cutterMin($page), 5);
-$product->paginationProto($product->counter(),5);
+
+echo "<br><br>";
+//$product->paginationProto($product->counter(),5);
 //$product->counter()/2
 echo $product->counter();
 //echo "<br>Pętla for: <br><br>";
@@ -95,5 +112,15 @@ echo $product->counter();
 
 
 ?>
+
+</div>
+    <div class="jumbotron" style="text-align: center">
+
+        <?php
+        $product->paginationProto($product->counter(),5);
+
+        ?>
+        </div>
+</div>
 </body>
 </html>

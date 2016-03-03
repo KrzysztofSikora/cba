@@ -6,16 +6,16 @@
  * Date: 01.03.16
  * Time: 15:39
  */
-class Products
+class Pictures
 {
-    public $productID;
-    public $productName;
+    public $imageID;
+    public $userID;
     public $category;
-    public $quantity;
-    public $price;
-    public $image;
-    public $imgName;
+    public $name;
     public $description;
+    public $like;
+    public $img;
+    public $imgName;
     public $db;
 
     function __construct()
@@ -27,34 +27,20 @@ class Products
         }
     }
 
-    function write() {
-        $query = $this -> db->query("SELECT * from `products`");
-        $query = $query->fetch_assoc();
-        $id = $query['productID'];
-        return $id;
-    }
 
-    function writeAll() {
-
-        foreach($this->db->query('SELECT * FROM `products`') as $tabProducts) {
-            $productName = $tabProducts['name'];
-            echo "$productName <br>";
-
-        }
-    }
 
     function writeForm() {
 
         echo <<< ENT_DISALLOWED
             Dodaj produkt
 <form action="index_unknow.php" enctype="multipart/form-data" method="post">
-    <input type="text" name="productName" placeholder="Nazwa"/><br><br>
+    <input type="number" name="userID" placeholder="userID"/><br><br>
     <input type="text" name="category" placeholder="Kategoria"/><br><br>
-    <input type="number" name="quantity" placeholder="Ilość"/><br><br>
-    <input type="number" name="price" placeholder="Cena"/><br><br>
-    <input type="text" name="description" placeholder="Opis"/><br><br>
+    <input type="text" name="primaryName" placeholder="primaryName"/><br><br>
+    <input type="textr" name="description" placeholder="Opis"/><br><br>
+    <input type="number" name="likes" placeholder="Likes"/><br><br>
     <input type="file" size="32" name="file_upload" value=""><br><br>
-    <input type="submit" name="insertProduct" value="Dodaj produkt"/>
+    <input type="submit" name="insertPicture" value="Dodaj produkt"/>
 </form>
 ENT_DISALLOWED;
 
@@ -62,7 +48,7 @@ ENT_DISALLOWED;
     }
 
 
-    function addProduct($insertProduct, $file_upload, $productName, $category, $quantity, $price, $description)
+    function addProduct($file_upload, $userID, $category, $primaryName, $description, $likes)
     {
 
         // validate()
@@ -72,15 +58,15 @@ ENT_DISALLOWED;
 
         $image = addslashes(file_get_contents($file_upload['tmp_name']));
         //you keep your column name setting for insertion. I keep image type Blob.
-        $query = "INSERT INTO products (productID, productName, category, quantity, price, image, imgName, description)
-                    VALUES('', '$productName', '$category', '$quantity', '$price', '$image', '$imgName', '$description')";
+        $query = "INSERT INTO pictures (imageID, userID, category, primaryName, description, likes, img, imgName)
+                    VALUES('', '$userID', '$category', '$primaryName', '$description', '$likes', '$image', '$imgName')";
         mysqli_query($this->db, $query);
 
     }
 
-    function showImage($productID) {
+    function showImage($imageID) {
 
-        $sql = "SELECT * FROM products WHERE productID = '$productID'";
+        $sql = "SELECT * FROM pictures WHERE imageID = '$imageID'";
         $sth = $this->db->query($sql);
         $result=mysqli_fetch_array($sth);
         return '<img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'"/>';
@@ -95,16 +81,12 @@ ENT_DISALLOWED;
         $numbPages = ceil($tmp);
             // zaokrąglam w górę po to zeby wyświetlić stronę z nie parzystej ilości elementów
 
-        echo "numPages: $numbPages";
+        //echo "numPages: $numbPages";
         echo <<< ENT_DISALLOWED
 
 <nav>
     <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
+
 ENT_DISALLOWED;
         for($i=1; $i<=$numbPages; $i++) {
 //            echo "$i <br>";
@@ -114,11 +96,7 @@ ENT_DISALLOWED;
 
         }
             echo <<< ENT_DISALLOWED
-            <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
+
     </ul>
 </nav>
 
@@ -128,30 +106,31 @@ ENT_DISALLOWED;
 
     function showProduct($min, $max) {
         // pokazuje od elementu do ile elementów
-       echo "<div style=\"float: left; padding: 6%\">";
-       echo "<table border=2px>";
+       echo '<div style="text-align: center">';
 
-        foreach($this->db->query("SELECT * FROM `products` LIMIT $min, $max") as $result) {
-            echo "<tr>";
-            echo "<td>" . $result['productID'] ."</td>";
-            echo "<td>" .$result['productName']."</td>";
-            echo "<td>" .$result['category']."</td>";
-            echo "<td>" .$result['quantity']."</td>";
-            echo "<td>" . $result['price']."</td>";
-            echo "<td>".'<img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'" height="120" width="120"/>'."</td>";
-            echo "<td>" .$result['description']."</td>";
-            echo "</tr>";
+        foreach($this->db->query("SELECT * FROM `pictures` LIMIT $min, $max") as $result) {
+
+
+            echo '<img src="data:image/jpeg;base64,'.base64_encode( $result['img'] ).'" />' .'<br>';
+            echo 'imageID: '.$result['imageID'] .'<br>';
+            echo 'userID: '.$result['userID'].'<br>';
+            echo 'category: '.$result['category'].'<br>';
+            echo 'primaryName: '.$result['primaryName'].'<br>';
+            echo 'description: '.$result['description'].'<br>';
+            echo 'likes: '.$result['likes'].'<br>';
+            echo 'imgName: '.$result['imgName'].'<br><br><br>';
+
+
         }
-        echo "</table>";
         echo "</div>";
     }
 
     function counter() {
         // zlicza ilość elementów w bazie
-        $result = $this->db->query("SELECT count(productID) FROM `products`");
+        $result = $this->db->query("SELECT count(imageID) FROM `pictures`");
         $result =mysqli_fetch_assoc($result);
 
-        return $result['count(productID)'];
+        return $result['count(imageID)'];
     }
 
     function cutterMin($page) {
