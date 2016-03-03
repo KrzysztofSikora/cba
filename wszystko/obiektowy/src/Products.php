@@ -168,12 +168,12 @@ ENT_DISALLOWED;
     }
     function cutterMax($page) {
 
-        $page = $page * 5 - 1;
-        // 0 -> 4
-        // 1 -> 9
-        // 2 -> 14
-        // 3 -> 19
-        // 4 -> 24
+        $page = $page * 5;
+        // 0 -> 5
+        // 1 -> 10
+        // 2 -> 15
+        // 3 -> 20
+        // 4 -> 25
 
         $cutMax = $page;
 
