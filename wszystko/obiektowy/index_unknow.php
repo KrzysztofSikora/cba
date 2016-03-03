@@ -53,14 +53,14 @@ include 'src/Products.php';
 //
 //$uzytkownik->userActivate($_GET['activate']);
 //echo "<br><br><br> Klasa produkty <br>_____________________<br>";
-////////////////// Produkty
+//////////////// Produkty
 $product = new Products();
-//
+
 //$product->writeForm();
-////$product->writeAll();
-//
-//
-//
+//$product->writeAll();
+
+
+
 //$product->addProduct($_POST['insertProduct'],$_FILES['file_upload'], $_POST['productName'], $_POST['category'],
 //    $_POST['quantity'], $_POST['price'], $_POST['description']);
 
@@ -79,14 +79,19 @@ echo $product->cutterMax($page);
 //0, 5 -> 5. 10    //i, i+5 -> i, i+5
 //$product->showProduct(0,5);
 
-$product->showProduct($product->cutterMin($page), $product->cutterMax($page));
-$product->paginationProto($product->counter(),$product->counter()/2);
-
+$product->showProduct($product->cutterMin($page), 5);
+$product->paginationProto($product->counter(),5);
+//$product->counter()/2
 echo $product->counter();
 //echo "<br>Pętla for: <br><br>";
 //for ($i=0;$i<100;$i=$i+5) {
 //    echo $i;
 //}
+
+
+
+
+
 
 
 ?>

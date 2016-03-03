@@ -87,9 +87,15 @@ ENT_DISALLOWED;
     }
 
     function paginationProto($volume, $volOnPage) {
-
+        // numeruje od ilość elementów, ile na stronie
         //10, 5
-        $numbPages = $volume/$volOnPage;
+        //22, 11
+        $tmp = $volume/$volOnPage;
+
+        $numbPages = ceil($tmp);
+            // zaokrąglam w górę po to zeby wyświetlić stronę z nie parzystej ilości elementów
+
+        echo "numPages: $numbPages";
         echo <<< ENT_DISALLOWED
 
             <nav>
@@ -121,7 +127,7 @@ ENT_DISALLOWED;
     }
 
     function showProduct($min, $max) {
-
+        // pokazuje od elementu do ile elementów
        echo "<div style=\"float: left; padding: 6%\">";
        echo "<table border=2px>";
 
@@ -141,6 +147,7 @@ ENT_DISALLOWED;
     }
 
     function counter() {
+        // zlicza ilość elementów w bazie
         $result = $this->db->query("SELECT count(productID) FROM `products`");
         $result =mysqli_fetch_assoc($result);
 
