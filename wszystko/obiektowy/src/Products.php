@@ -146,4 +146,38 @@ ENT_DISALLOWED;
 
         return $result['count(productID)'];
     }
+
+    function cutterMin($page) {
+        // 1 -> 0;
+        // 2 -> 5;
+        // 3 -> 10
+        // 4 -> 15;
+
+        $page = $page -1;
+
+        // 0 -> 0
+        // 1 -> 5
+        // 2 -> 10
+        // 3 -> 15
+        // 4 -> 20
+
+        $cutMin = $page * 5;
+
+
+        return $cutMin;
+    }
+    function cutterMax($page) {
+
+        $page = $page * 5 - 1;
+        // 0 -> 4
+        // 1 -> 9
+        // 2 -> 14
+        // 3 -> 19
+        // 4 -> 24
+
+        $cutMax = $page;
+
+        return $cutMax;
+
+    }
 }
