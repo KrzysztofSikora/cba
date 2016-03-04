@@ -104,25 +104,35 @@ ENT_DISALLOWED;
 
     }
 
-    function showProduct($min, $max) {
+    function showPicture($min, $max) {
         // pokazuje od elementu do ile elementów
        echo '<div style="text-align: center">';
 
         foreach($this->db->query("SELECT * FROM `pictures` LIMIT $min, $max") as $result) {
 
+//            echo '<div class="embed-responsive embed-responsive-4by3">
+//  <iframe class="embed-responsive-item" src="data:image/jpeg;base64,'.base64_encode( $result['img'] ).'"></iframe>
+//</div>';
+            echo '<a href="?picture='.$result['imageID'].'"><img src="data:image/jpeg;base64,' . base64_encode($result['img']) . '" class="img-responsive center-block" style="text-align=center"/></a>' . '<br>';
+            echo 'imageID: ' . $result['imageID'] . '<br>';
+            echo 'userID: ' . $result['userID'] . '<br>';
+            echo 'category: ' . $result['category'] . '<br>';
+            echo 'primaryName: ' . $result['primaryName'] . '<br>';
+            echo 'description: ' . $result['description'] . '<br>';
+            echo 'likes: ' . $result['likes'] . '<br>';
+            echo 'imgName: ' . $result['imgName'] . '<br><br><br>';
+            echo '<div class="fb-comments" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/' . $result['imageID'] .'"'.
+                ' data-numposts="5"></div><br><br>';
 
-            echo '<img src="data:image/jpeg;base64,'.base64_encode( $result['img'] ).'" />' .'<br>';
-            echo 'imageID: '.$result['imageID'] .'<br>';
-            echo 'userID: '.$result['userID'].'<br>';
-            echo 'category: '.$result['category'].'<br>';
-            echo 'primaryName: '.$result['primaryName'].'<br>';
-            echo 'description: '.$result['description'].'<br>';
-            echo 'likes: '.$result['likes'].'<br>';
-            echo 'imgName: '.$result['imgName'].'<br><br><br>';
+            echo '<div class="fb-like" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] .'"'.
+                'data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div> <br>';
 
+            echo 'Liczba komenatrzy w commentBoxie wynosi:' .
+                $this->commentBoxCounter('krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picutre='.$result['imageID']);
+            echo "</div>";
 
+////
         }
-        echo "</div>";
     }
 
     function counter() {
@@ -152,18 +162,44 @@ ENT_DISALLOWED;
 
         return $cutMin;
     }
-    function cutterMax($page) {
 
-        $page = $page * 5;
-        // 0 -> 5
-        // 1 -> 10
-        // 2 -> 15
-        // 3 -> 20
-        // 4 -> 25
+    function commentBoxCounter($source_url) {
 
-        $cutMax = $page;
+        $url = "http://api.facebook.com/restserver.php?method=links.getStats&urls=".urlencode($source_url);
+        $xml = file_get_contents($url);
+        $xml = simplexml_load_string($xml);
 
-        return $cutMax;
+
+        return $commentBoxCount = $xml->link_stat->commentsbox_count; // komenatrze
+    }
+
+    function onePicture($picture) {
+        // $_GET['picture'];
+
+
+        $result = $this->db->query("SELECT * FROM `pictures` WHERE imageID = '$picture'");
+        $result =mysqli_fetch_assoc($result);
+
+            echo '<img src="data:image/jpeg;base64,' . base64_encode($result['img']) . '" class="img-responsive center-block" style="text-align=center"/>' . '<br>';
+//            echo 'imageID: ' . $result['imageID'] . '<br>';
+//            echo 'userID: ' . $result['userID'] . '<br>';
+//            echo 'category: ' . $result['category'] . '<br>';
+//            echo 'primaryName: ' . $result['primaryName'] . '<br>';
+//            echo 'description: ' . $result['description'] . '<br>';
+//            echo 'likes: ' . $result['likes'] . '<br>';
+//            echo 'imgName: ' . $result['imgName'] . '<br><br><br>';
+//            echo '<div class="fb-comments" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/' . $result['imageID'] .'"'.
+//                ' data-numposts="5"></div><br><br>';
+//
+//            echo '<div class="fb-like" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/' . $result['imageID'] .'"'.
+//                'data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div> <br>';
+//
+//            echo 'Liczba komenatrzy w commentBoxie wynosi:' .
+//                $this->commentBoxCounter('krzysztofsikora24.pl/wszystko/obiektowy_obrazki/'.$result['imageID']);
+//            echo "</div>";
+
+////
+
 
     }
 }
