@@ -30,12 +30,21 @@ class Pictures
 
 
     function writeForm() {
-
+//        <input type="text" name="category" placeholder="Kategoria"/><br><br>
         echo <<< ENT_DISALLOWED
             Dodaj produkt
 <form action="index_unknow.php" enctype="multipart/form-data" method="post">
     <input type="number" name="userID" placeholder="userID"/><br><br>
-    <input type="text" name="category" placeholder="Kategoria"/><br><br>
+
+    <select name="category">
+    <option value="technowinki">Technowinki</option>
+    <option value="natura">Natura</option>
+    <option value="nieporawni">Niepoprawni</option>
+    <option value="inne">Inne</option>
+  </select> <br><br>
+
+
+
     <input type="text" name="primaryName" placeholder="primaryName"/><br><br>
     <input type="textr" name="description" placeholder="Opis"/><br><br>
     <input type="number" name="likes" placeholder="Likes"/><br><br>
@@ -69,7 +78,7 @@ ENT_DISALLOWED;
         $sql = "SELECT * FROM pictures WHERE imageID = '$imageID'";
         $sth = $this->db->query($sql);
         $result=mysqli_fetch_array($sth);
-        return '<img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'"/>';
+        return '<img src="data:image/jpeg;base64,'.base64_encode( $result['img'] ).'"/>';
     }
 
     function paginationProto($volume, $volOnPage) {
@@ -121,18 +130,17 @@ ENT_DISALLOWED;
             echo 'description: ' . $result['description'] . '<br>';
             echo 'likes: ' . $result['likes'] . '<br>';
             echo 'imgName: ' . $result['imgName'] . '<br><br><br>';
-            echo '<div class="fb-comments" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/' . $result['imageID'] .'"'.
+
+            echo '<div class="fb-comments" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] .'"'.
                 ' data-numposts="5"></div><br><br>';
 
             echo '<div class="fb-like" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] .'"'.
-                'data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div> <br>';
+                'data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div> <br><br><br>';
 
             echo 'Liczba komenatrzy w commentBoxie wynosi:' .
-                $this->commentBoxCounter('krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picutre='.$result['imageID']);
-            echo "</div>";
-
-////
+                $this->commentBoxCounter('krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture='.$result['imageID']);
         }
+        echo "</div>";
     }
 
     function counter() {

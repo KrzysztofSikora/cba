@@ -3,21 +3,29 @@
 <!--    administrator komentarzy z facebooka-->
     <meta property="fb:admins" content="100005557807089"/>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  <!--- kodowanie polskich znaków -->
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  <!--- kodowanie polskich znaków -->-->
+<!---->
+<!--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="custom.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<!--    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">-->
 
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="custom.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
 </head>
 
 <body>
-//
 <!--skrypt obsługujący komentarze facebook-->
 <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -75,7 +83,7 @@ echo $_SESSION['ip'];
 include 'src/Pictures.php';
 
 
-//////////////// Produkty
+//////////////// Produkty//
 $product = new Pictures();
 
 if(isset($_GET['picture'])) {
@@ -123,15 +131,18 @@ $product->showPicture($product->cutterMin($page), 5);
 
     <div class="jumbotron" style="text-align: center">
 <?php
-if(!($page=='add')) {
+
+if(!(($page=='add') || isset($_GET['picture']))) {
     $product->paginationProto($product->counter(),5);
 }
 ?>
 
     </div>
+    <?php
 
-    <div class="jumbotron">
+echo "test";
 
+    ?>
     </div>
 
 
