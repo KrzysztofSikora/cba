@@ -19,6 +19,8 @@ if(isset($_SESSION['userID'])) {
         include 'index_client.php'; // jesli jest zalogowany jako klient
     }
 } else {
-    include 'index_unknow.php'; // jesli jest nie zalogowany
+    //include 'index_unknow.php'; // jesli jest nie zalogowany
+    header("Location: index_unknow.php?category=technowinki");
+    exit;
 }
 

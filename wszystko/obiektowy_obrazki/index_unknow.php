@@ -147,7 +147,6 @@ if(!(($page=='add') || isset($_GET['picture']))) {
     </div>
     <?php
 
-echo "test";
 
     ?>
     </div>
