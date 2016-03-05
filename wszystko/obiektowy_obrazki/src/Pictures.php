@@ -145,6 +145,38 @@ ENT_DISALLOWED;
 
     }
 
+    function paginationSeach($volume, $volOnPage, $category, $description) {
+        // numeruje od ilość elementów, ile na stronie
+        //10, 5
+        //22, 11
+        $tmp = $volume/$volOnPage;
+
+        $numbPages = ceil($tmp);
+        // zaokrąglam w górę po to zeby wyświetlić stronę z nie parzystej ilości elementów
+
+        //echo "numPages: $numbPages";
+        echo <<< ENT_DISALLOWED
+
+<nav>
+    <ul class="pagination">
+
+ENT_DISALLOWED;
+        for($i=1; $i<=$numbPages; $i++) {
+//            echo "$i <br>";
+
+
+            echo '<li><a href="'.'?category='.$category.'&'.'page='.$i  .'&'.'searchValue='.$description.'">'.$i.'</a></li>';
+
+        }
+        echo <<< ENT_DISALLOWED
+
+    </ul>
+</nav>
+
+ENT_DISALLOWED;
+
+    }
+
     function showPicture($min, $max) {
         // pokazuje od elementu do ile elementów
        echo '<div style="text-align: center">';
@@ -205,6 +237,35 @@ ENT_DISALLOWED;
         echo "</div>";
     }
 
+    function showPictureSearch($min, $max, $description) {
+        // pokazuje od elementu do ile elementów
+        echo '<div style="text-align: center">';
+
+        foreach($this->db->query("SELECT * FROM `pictures` WHERE description LIKE '%$description%' LIMIT $min, $max") as $result) {
+
+//            echo '<div class="embed-responsive embed-responsive-4by3">
+//  <iframe class="embed-responsive-item" src="data:image/jpeg;base64,'.base64_encode( $result['img'] ).'"></iframe>
+//</div>';
+            echo '<a href="?picture='.$result['imageID'].'"><img src="data:image/jpeg;base64,' . base64_encode($result['img']) . '" class="img-responsive center-block" style="text-align=center"/></a>' . '<br>';
+            echo 'imageID: ' . $result['imageID'] . '<br>';
+            echo 'userID: ' . $result['userID'] . '<br>';
+            echo 'category: ' . $result['category'] . '<br>';
+            echo 'primaryName: ' . $result['primaryName'] . '<br>';
+            echo 'description: ' . $result['description'] . '<br>';
+            echo 'likes: ' . $result['likes'] . '<br>';
+            echo 'imgName: ' . $result['imgName'] . '<br><br><br>';
+
+            echo '<div class="fb-comments" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] .'"'.
+                ' data-numposts="5"></div><br><br>';
+
+            echo '<div class="fb-like" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] .'"'.
+                'data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div> <br><br><br>';
+
+            echo 'Liczba komenatrzy w commentBoxie wynosi:' .
+                $this->commentBoxCounter('krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture='.$result['imageID']);
+        }
+        echo "</div>";
+    }
     function counter() {
         // zlicza ilość elementów w bazie
         $result = $this->db->query("SELECT count(imageID) FROM `pictures`");
@@ -216,6 +277,14 @@ ENT_DISALLOWED;
     function counterCategory($category) {
         // zlicza ilość elementów w bazie
         $result = $this->db->query("SELECT count(imageID) FROM `pictures` WHERE category LIKE '$category'");
+        $result =mysqli_fetch_assoc($result);
+
+        return $result['count(imageID)'];
+    }
+
+    function counterSearch($description) {
+        // zlicza ilość elementów w bazie szukanych po opisie
+        $result = $this->db->query("SELECT count(imageID) FROM `pictures` WHERE description LIKE '%$description%'");
         $result =mysqli_fetch_assoc($result);
 
         return $result['count(imageID)'];

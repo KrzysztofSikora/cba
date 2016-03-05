@@ -60,7 +60,16 @@
             <li role="presentation"><a href="?category=nieporawni">Nieporawni</a></li>
             <li role="presentation"><a href="?category=inne">Inne</a></li>
 <!--            <li role="presentation"><a href="#">Messages</a></li>-->
+
+        <li><form class="navbar-form navbar-left" role="search" method="get" action="index_unknow.php">
+
+            <button type="submit" class="btn btn-default" name="category" value="search">Szukaj</button>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="w opisie" name="searchValue">
+            </div></li>
+            <li role="presentation"><a href="?category=rule">Regulamin</a></li>
         </ul>
+        </form>
     </nav>
 </div>
 
@@ -89,6 +98,12 @@ include 'src/Pictures.php';
 
 //////////////// Produkty//
 $product = new Pictures();
+
+
+$description = $_GET['searchValue'];
+
+$searchButton = $_GET['seachButton'];
+
 
 if(isset($_GET['picture'])) {
     $picture = $_GET['picture'];
@@ -126,10 +141,16 @@ $category = $_GET['category'];
 
     // domyśle $page = wszystko
 //$product->showPicture($product->cutterMin($page), 5);
+// dobry
+if(isset($description)) {
+    $product->showPictureSearch($product->cutterMin($page), 5, $description);
+} else {
 $product->showPictureCategory($product->cutterMin($page), 5, $category);
-
 }
 
+if($_GET['category'] == 'rule') {
+    echo "rule";
+}
 
 ?>
     </div>
@@ -140,7 +161,16 @@ $product->showPictureCategory($product->cutterMin($page), 5, $category);
 
 if(!(($page=='add') || isset($_GET['picture']))) {
     //$product->paginationProto($product->counter(),5);
-    $product->paginationCategory($product->counterCategory($category),5, $category);
+
+    if(isset($description)) {
+        $product->paginationSeach($product->counterSearch($description), 5, $category, $description);
+    } else {
+        $product->paginationCategory($product->counterCategory($category), 5, $category);
+    }
+
+
+}
+
 }
 ?>
 
