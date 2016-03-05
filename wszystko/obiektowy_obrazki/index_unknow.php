@@ -55,6 +55,10 @@
         <ul class="nav nav-pills">
 <!--            <li role="presentation" class="active"><a href="#">Home</a></li>-->
             <li role="presentation"><a href="?page=add">Dodaj obraz</a></li>
+            <li role="presentation"><a href="?category=technowinki">Technowinki</a></li>
+            <li role="presentation"><a href="?category=natura">Natura</a></li>
+            <li role="presentation"><a href="?category=nieporawni">Nieporawni</a></li>
+            <li role="presentation"><a href="?category=inne">Inne</a></li>
 <!--            <li role="presentation"><a href="#">Messages</a></li>-->
         </ul>
     </nav>
@@ -118,9 +122,11 @@ if (isset($_GET['page'])) {
     $page = $_GET['page'];
 }
 
+$category = $_GET['category'];
 
-$product->showPicture($product->cutterMin($page), 5);
-
+    // domyśle $page = wszystko
+//$product->showPicture($product->cutterMin($page), 5);
+$product->showPictureCategory($product->cutterMin($page), 5, $category);
 
 }
 
@@ -133,7 +139,8 @@ $product->showPicture($product->cutterMin($page), 5);
 <?php
 
 if(!(($page=='add') || isset($_GET['picture']))) {
-    $product->paginationProto($product->counter(),5);
+    //$product->paginationProto($product->counter(),5);
+    $product->paginationCategory($product->counterCategory($category),5, $category);
 }
 ?>
 
