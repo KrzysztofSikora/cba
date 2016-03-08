@@ -55,6 +55,8 @@
         <ul class="nav nav-pills">
 <!--            <li role="presentation" class="active"><a href="#">Home</a></li>-->
             <li role="presentation"><a href="?page=add">Dodaj obraz</a></li>
+            <li role="presentation"><a href="?category=all">Wszystko</a></li>
+            <li role="presentation"><a href="?category=top">Top</a></li>
             <li role="presentation"><a href="?category=technowinki">Technowinki</a></li>
             <li role="presentation"><a href="?category=natura">Natura</a></li>
             <li role="presentation"><a href="?category=nieporawni">Nieporawni</a></li>
@@ -151,7 +153,15 @@ $product->showPictureCategory($product->cutterMin($page), 5, $category);
 if($_GET['category'] == 'rule') {
     echo "rule";
 }
-
+if($_GET['category'] == 'all') {
+    echo "all";
+    $product->showPictureAll($product->cutterMin($page), 5);
+}
+if($_GET['category'] == 'top') {
+    echo "top";
+    echo $product->counter();
+    $product->showPictureTop($product->cutterMin($page), 5);
+}
 ?>
     </div>
 
@@ -163,11 +173,18 @@ if(!(($page=='add') || isset($_GET['picture']))) {
     //$product->paginationProto($product->counter(),5);
 
     if(isset($description)) {
-        $product->paginationSeach($product->counterSearch($description), 5, $category, $description);
+        $product->paginationSearch($product->counterSearch($description), 5, $category, $description);
     } else {
         $product->paginationCategory($product->counterCategory($category), 5, $category);
     }
 
+    if($_GET['category'] == 'top') {
+        $product->paginationTop($product->counter(), 5);
+    }
+
+    if($_GET['category'] == 'all') {
+        $product->paginationAll($product->counter(), 5);
+    }
 
 }
 
@@ -177,7 +194,7 @@ if(!(($page=='add') || isset($_GET['picture']))) {
     </div>
     <?php
 
-
+    echo date('Y-m-d H:i:s'); // 2009-07-09 22:30:59
     ?>
     </div>
 
