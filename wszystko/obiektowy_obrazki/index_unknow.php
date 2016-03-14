@@ -176,15 +176,6 @@ if(isset($_GET['activate'])) {
 }
 
 
-// dodawanie produktu
-
-if(isset($_GET['page'])) {
-    if($_GET['page'] == "add") {
-        echo "Login";
-        $product->writeForm();
-
-    }
-}
 
 
 
@@ -195,11 +186,31 @@ if(isset($_GET['picture'])) {
     $product->onePicture($picture);
 }
 
-if(isset($_POST['insertPicture'])) {
-    $product->addProduct($_FILES['file_upload'], $_POST['userID'], $_POST['category'],
-        $_POST['primaryName'], $_POST['description'], $_POST['$likes'] );
-    header ("Location: index_unknow.php?category=all");
-    exit;
+if(isset($_SESSION['userID'])) {
+    // sprawdzam aktywację konta a potem dodaje zdjęcie
+    if($user->checkActivate($_SESSION['userID'])) {
+
+
+            // dodawanie produktu formularz
+
+            if(isset($_GET['page'])) {
+                if($_GET['page'] == "add") {
+                    echo "Login";
+                    $product->writeForm();
+
+                }
+            }
+
+            // dodawanie produktu SQL
+            if(isset($_POST['insertPicture'])) {
+                $product->addProduct($_FILES['file_upload'], $_SESSION['userID'], $_POST['category'],
+                    $_POST['primaryName'], $_POST['description'], $_POST['$likes'] );
+                header ("Location: index_unknow.php?category=all");
+                exit;
+            }
+    } else {
+        echo "Konto nie aktywowane. Potwierdź rejestrację.";
+    }
 }
 
 $page = 1;

@@ -14,6 +14,7 @@ class Users
     public $login;
     public $password;
     public $code;
+    public $regDate;
     public $db;
 
     function __construct()
@@ -86,8 +87,8 @@ ENT_DISALLOWED;
         if($this->validateRegistry($name, $surname, $email, $login, $password, $password2)) {
 
             $code = md5(mt_rand()); //generowanie kodu aktywacyjnego
-
-            $this->db->query("INSERT INTO `users` VALUES ('NULL', '$name', '$surname', '$email', '$login', '$password', '$code')");
+            $regDate = date('Y-m-d H:i:s');
+            $this->db->query("INSERT INTO `users` VALUES ('NULL', '$name', '$surname', '$email', '$login', '$password', '$code', '$regDate')");
             // wysylanie meila na poczte
             $this->sendActivate($code, $login, $email);
         } else {
@@ -254,5 +255,19 @@ ENT_DISALLOWED;
         }
     }
 
+    function checkActivate($userID) {
+
+        $activateTab = $this->db->query("SELECT `code` FROM  `users` WHERE  `userID` LIKE '$userID' ");
+
+        $activateTab = $activateTab->fetch_assoc();
+
+        if($activateTab['code'] == 'active') {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
 
 }
