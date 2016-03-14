@@ -36,7 +36,7 @@ class Pictures
         echo <<< ENT_DISALLOWED
             Dodaj produkt
 <form action="index_unknow.php" enctype="multipart/form-data" method="post">
-    <input type="number" name="userID" placeholder="userID"/><br><br>
+
 
     <select name="category">
     <option value="technowinki">Technowinki</option>
@@ -76,22 +76,7 @@ ENT_DISALLOWED;
 
     }
 
-//    function addProduct($file_upload, $userID, $category, $primaryName, $description, $likes)
-//    {
-//
-//        // validate()
-//        $dataAdd = date('Y-m-d H:i:s'); // 2009-07-09 22:30:59
-//        $addIP = $_SERVER['REMOTE_ADDR'];
-//        $f = $file_upload;
-//        $imgName = $f['name'];
-//
-//        $image = addslashes(file_get_contents($file_upload['tmp_name']));
-//        //you keep your column name setting for insertion. I keep image type Blob.
-//        $query = "INSERT INTO pictures (imageID, userID, category, primaryName, description, likes, img, imgName, dataAdd, addIP)
-//                    VALUES('', '$userID', '$category', '$primaryName', '$description', '$likes', '$image', '$imgName',  '$dataAdd', '$addIP')";
-//        mysqli_query($this->db, $query);
-//
-//    }
+
 
     function showImage($imageID) {
 
