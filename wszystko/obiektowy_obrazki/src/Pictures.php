@@ -16,6 +16,8 @@ class Pictures
     public $like;
     public $img;
     public $imgName;
+    public $dataAdd;
+    public $addIP;
     public $db;
 
     function __construct()
@@ -62,13 +64,14 @@ ENT_DISALLOWED;
 
         // validate()
         $dataAdd = date('Y-m-d H:i:s'); // 2009-07-09 22:30:59
+        $addIP = $_SERVER['REMOTE_ADDR'];
         $f = $file_upload;
         $imgName = $f['name'];
 
         $image = addslashes(file_get_contents($file_upload['tmp_name']));
         //you keep your column name setting for insertion. I keep image type Blob.
-        $query = "INSERT INTO pictures (imageID, userID, category, primaryName, description, likes, img, imgName, dataAdd)
-                    VALUES('', '$userID', '$category', '$primaryName', '$description', '$likes', '$image', '$imgName',  '$dataAdd')";
+        $query = "INSERT INTO pictures (imageID, userID, category, primaryName, description, likes, img, imgName, dataAdd, addIP)
+                    VALUES('', '$userID', '$category', '$primaryName', '$description', '$likes', '$image', '$imgName',  '$dataAdd', '$addIP')";
         mysqli_query($this->db, $query);
 
     }

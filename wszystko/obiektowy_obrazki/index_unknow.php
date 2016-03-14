@@ -3,7 +3,7 @@
 <!--    administrator komentarzy z facebooka-->
     <meta property="fb:admins" content="100005557807089"/>
 
-<!--    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  <!--- kodowanie polskich znaków -->-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  <!--- kodowanie polskich znaków -->
 <!---->
 <!--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
 <!--    <link rel="stylesheet" href="custom.css">-->
@@ -54,7 +54,24 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <ul class="nav nav-pills">
 <!--            <li role="presentation" class="active"><a href="#">Home</a></li>-->
-            <li role="presentation"><a href="?page=add">Dodaj obraz</a></li>
+
+            <?php
+            session_save_path('session/');
+            session_start();
+
+
+            if(!(isset($_SESSION['userID']))) {
+                echo '<li role="presentation"><a href="?page=login">Zaloguj</a></li>';
+            }
+            if(isset($_SESSION['userID'])) {
+
+                echo '<li role="presentation"><a href="?page=logout">Wyloguj</a></li>';
+
+                echo '<li role="presentation"><a href="?page=add">Dodaj zdjęcie</a></li>';
+            }
+            ?>
+
+
             <li role="presentation"><a href="?category=all">Wszystko</a></li>
             <li role="presentation"><a href="?category=top">Top</a></li>
             <li role="presentation"><a href="?category=technowinki">Technowinki</a></li>
@@ -89,18 +106,24 @@
 // dodaje
 session_save_path('session/');
 session_start();
-$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
 
-echo $_SESSION['ip'];
+
 
 
 
 include 'src/Pictures.php';
+include 'src/Users.php';
+
+////Testowe wyświetlanie zmiennych///
+
+
+
+
 
 
 //////////////// Produkty//
 $product = new Pictures();
-
+$user = new Users();
 
 $description = $_GET['searchValue'];
 
@@ -112,17 +135,60 @@ if(isset($_GET['picture'])) {
     $product->onePicture($picture);
 } else {
 
-
+// wyloguj
 
 if(isset($_GET['page'])) {
-    $page = $_GET['page'];
-    if($page == "add") {
+    if($_GET['page'] == 'logout') {
+        session_destroy();
+        header("Location: index_unknow.php?category=all");
+        exit;
+    }
+}
 
-        $product->writeForm();
 
+
+// logowanie do zmiennej sesyjnej
+if(isset($_POST['log'])) {
+
+    $_SESSION['userID'] = $user->login($_POST['login'], $_POST['password']);
+    header("Location: index_unknow.php?page=add");
+    exit;
+}
+
+// wyświetlanie logowania i rejestracji
+if(isset($_GET['page'])) {
+    if($_GET['page'] == "login") {
+        echo "Login";
+        //$product->writeForm();
+        $user->writeForm();
 
     }
 }
+
+// rejestracja
+if(isset($_POST['reg'])) {
+    $user->registry($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['login'], $_POST['password'], $_POST['password2']);
+}
+
+// potwierdzenie rejestracji
+if(isset($_GET['activate'])) {
+    $user->userActivate($_GET['activate']);
+}
+
+
+// dodawanie produktu
+
+if(isset($_GET['page'])) {
+    if($_GET['page'] == "add") {
+        echo "Login";
+        $product->writeForm();
+
+    }
+}
+
+
+
+
 
 if(isset($_GET['picture'])) {
     $picture = $_GET['picture'];
@@ -132,6 +198,8 @@ if(isset($_GET['picture'])) {
 if(isset($_POST['insertPicture'])) {
     $product->addProduct($_FILES['file_upload'], $_POST['userID'], $_POST['category'],
         $_POST['primaryName'], $_POST['description'], $_POST['$likes'] );
+    header ("Location: index_unknow.php?category=all");
+    exit;
 }
 
 $page = 1;
@@ -141,9 +209,8 @@ if (isset($_GET['page'])) {
 
 $category = $_GET['category'];
 
-    // domyśle $page = wszystko
-//$product->showPicture($product->cutterMin($page), 5);
-// dobry
+// wyszukiwarka i domyslna kategoria tj. nie specjalna
+
 if(isset($description)) {
     $product->showPictureSearch($product->cutterMin($page), 5, $description);
 } else {

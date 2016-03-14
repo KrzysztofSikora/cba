@@ -9,7 +9,7 @@
 session_save_path('session/');
 session_start();
 
-echo "index.php <br>";
+//echo "index.php <br>";
 
 if(isset($_SESSION['userID'])) {
     if($_SESSION['userID'] == 1) {

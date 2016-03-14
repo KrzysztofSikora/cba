@@ -90,7 +90,6 @@ ENT_DISALLOWED;
             $this->db->query("INSERT INTO `users` VALUES ('NULL', '$name', '$surname', '$email', '$login', '$password', '$code')");
             // wysylanie meila na poczte
             $this->sendActivate($code, $login, $email);
-
         } else {
             echo "Rejestracja nie mozliwa.";
         }
@@ -249,7 +248,7 @@ ENT_DISALLOWED;
 
             } else {
                 $this ->db->query("UPDATE `users` SET `code` = 'active' WHERE `code` = '$code'");
-                echo "Potwierdzona rejestracja";
+                echo "Potwierdzona rejestracja. Teraz możesz się zalogować.";
             }
 
         }
