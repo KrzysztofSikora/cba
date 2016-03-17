@@ -19,33 +19,35 @@ class Users
 
     function __construct()
     {
-        $this->db = mysqli_connect('krzysztofsikora24.pl','krzysztofcba','bazacba12','krzysztofsikora24_pl');
-        if (mysqli_connect_errno())
-        {
+        $this->db = mysqli_connect('krzysztofsikora24.pl', 'krzysztofcba', 'bazacba12', 'krzysztofsikora24_pl');
+        if (mysqli_connect_errno()) {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }
 
 
     }
 
-    function write() {
-        $query = $this -> db->query("SELECT * from `users`");
+    function write()
+    {
+        $query = $this->db->query("SELECT * from `users`");
         $query = $query->fetch_assoc();
         $id = $query['userID'];
         return $id;
     }
 
-    function writeAll() {
+    function writeAll()
+    {
 
-            foreach($this->db->query('SELECT * FROM `users`') as $tabUsers) {
-                $name = $tabUsers['name'];
-                echo "$name <br>";
+        foreach ($this->db->query('SELECT * FROM `users`') as $tabUsers) {
+            $name = $tabUsers['name'];
+            echo "$name <br>";
 
-            }
+        }
     }
 
-    function writeForm() {
-            /// dodać action form gdzie wyświetlany jest formularz
+    function writeForm()
+    {
+        /// dodać action form gdzie wyświetlany jest formularz
         echo <<< ENT_DISALLOWED
             Zaloguj się.
 <form action="index_unknow.php" method="post">
@@ -69,11 +71,12 @@ ENT_DISALLOWED;
 
     }
 
-    function login($login, $password) {
+    function login($login, $password)
+    {
 
 
-        if($this->validateLogin($login, $password)) {
-            $query = $this -> db->query("SELECT `login`, `password`, `userID` from `users` WHERE `login` like '$login' and `password` like '$password'");
+        if ($this->validateLogin($login, $password)) {
+            $query = $this->db->query("SELECT `login`, `password`, `userID` from `users` WHERE `login` like '$login' and `password` like '$password'");
             $query = $query->fetch_assoc();
             $id = $query['userID'];
 
@@ -81,10 +84,10 @@ ENT_DISALLOWED;
         }
     }
 
+    function registry($name, $surname, $email, $login, $password, $password2)
+    {
 
-    function registry($name, $surname, $email, $login, $password, $password2) {
-
-        if($this->validateRegistry($name, $surname, $email, $login, $password, $password2)) {
+        if ($this->validateRegistry($name, $surname, $email, $login, $password, $password2)) {
 
             $code = md5(mt_rand()); //generowanie kodu aktywacyjnego
             $regDate = date('Y-m-d H:i:s');
@@ -96,7 +99,9 @@ ENT_DISALLOWED;
         }
 
     }
-    private function validateRegistry($name, $surname, $email, $login, $password, $password2) {
+
+    private function validateRegistry($name, $surname, $email, $login, $password, $password2)
+    {
 
         // walidacja danych
         $flag = 1;
@@ -104,14 +109,14 @@ ENT_DISALLOWED;
         if (preg_match('/^[A-ZĄĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$/', $name)) {
             echo("Imie ok <br>");
         } else {
-            echo("Imie error <br>");
+            echo("Imie error Podaj do wzoru Iiiiiii <br>");
             $flag = 0;
         }
 
         if (preg_match('/^[A-ZĄĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$/', $surname)) {
             echo("Nazwisko ok <br>");
         } else {
-            echo("Nazwisko error <br>");
+            echo("Nazwisko error. Podaj do wzoru Nnnnnnn<br>");
             $flag = 0;
         }
 
@@ -129,38 +134,38 @@ ENT_DISALLOWED;
             $flag = 0;
         }
 
-        if($password === $password2) {
+        if ($password === $password2) {
             if (preg_match('/^[0-9A-Za-z]{6,}$/', $password)) {
                 echo("Haslo ok <br>");
             } else {
-                echo("Haslo error <br>");
+                echo("Haslo error. Za krótkie <br>");
                 $flag = 0;
             }
         } else {
-            echo ("Hasla sie roznia <br>");
+            echo("Hasla sie roznia <br>");
             $flag = 0;
         }
 
         // sprawdzanie loginu
         $tabLogin = $this->db->query("SELECT * FROM `users` WHERE `login` LIKE '$login'");
 
-        $tabLogin = $tabLogin -> fetch_assoc();
+        $tabLogin = $tabLogin->fetch_assoc();
 
-        if(!empty($tabLogin)) {
-            echo ("Login zajety");
+        if (!empty($tabLogin)) {
+            echo("Login zajety");
             $flag = 0;
         }
         // sprawdzanie meila
         $tabEmail = $this->db->query("SELECT * FROM `users` WHERE `email` LIKE '$email'");
-        $tabEmail = $tabEmail -> fetch_assoc();
+        $tabEmail = $tabEmail->fetch_assoc();
 
-        if(!empty($tabEmail)) {
-            echo ("Meil zajety");
+        if (!empty($tabEmail)) {
+            echo("Meil zajety");
             $flag = 0;
         }
 
 
-        if($flag === 1) {
+        if ($flag === 1) {
             return true;
         } else {
             return false;
@@ -168,7 +173,8 @@ ENT_DISALLOWED;
 
     }
 
-    private function validateLogin($login, $password) {
+    private function validateLogin($login, $password)
+    {
         $flag = 1;
 
 
@@ -191,32 +197,34 @@ ENT_DISALLOWED;
 
         $tabLogin = $this->db->query("SELECT * FROM `users` WHERE `login` LIKE '$login'");
 
-        $tabLogin = $tabLogin -> fetch_assoc();
+        $tabLogin = $tabLogin->fetch_assoc();
 
-        if(empty($tabLogin)) {
-            echo ("Nie ma takiego loginu w bazie.");
+        if (empty($tabLogin)) {
+            echo("Nie ma takiego loginu w bazie.");
             $flag = 0;
         }
 
 
         $tabPassword = $this->db->query("SELECT * FROM `users` WHERE `password` LIKE '$password'");
 
-        $tabPassword = $tabPassword -> fetch_assoc();
+        $tabPassword = $tabPassword->fetch_assoc();
 
-        if(empty($tabPassword)) {
-            echo ("Błędne hasło.");
+        if (empty($tabPassword)) {
+            echo("Błędne hasło.");
             $flag = 0;
         }
 
 
-        if($flag === 1) {
+        if ($flag === 1) {
             return true;
         } else {
             return false;
         }
 
     }
-    function sendActivate($code, $login, $email) {
+
+    function sendActivate($code, $login, $email)
+    {
 
         $email_template = "templates/email_template.html";
         $message = file_get_contents($email_template);
@@ -224,7 +232,7 @@ ENT_DISALLOWED;
         $message = str_replace("[key]", $code, $message);
         $message = str_replace("[url]", "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'], $message);
         $header = 'From listdlakrzycha@gmail.com' . "\r\n" .
-            'Reply-To: listdlakrzycha@gmail.com'. "\r\n" .
+            'Reply-To: listdlakrzycha@gmail.com' . "\r\n" .
             'Content-type: text/html; charset=utf-8' . "\r\n";
 
         mail($email, "Aktywacja konta " . $email, $message, $header);
@@ -232,10 +240,10 @@ ENT_DISALLOWED;
         echo "Email wysłany";
     }
 
-    function userActivate($activate) {
+    function userActivate($activate)
+    {
         $code = $activate;
-        if(isset($code)) {
-
+        if (isset($code)) {
 
 
             $tabCode = $this->db->query("SELECT `code` FROM  `users` WHERE  `code` LIKE '$code' ");
@@ -244,24 +252,25 @@ ENT_DISALLOWED;
 
 
             // nie ma takiego uzytkownika o takim kodzie;
-            if(empty($tabCode)) {
-                echo ("Nie ma użytkownika o takim kodzie");
+            if (empty($tabCode)) {
+                echo("Nie ma użytkownika o takim kodzie");
 
             } else {
-                $this ->db->query("UPDATE `users` SET `code` = 'active' WHERE `code` = '$code'");
+                $this->db->query("UPDATE `users` SET `code` = 'active' WHERE `code` = '$code'");
                 echo "Potwierdzona rejestracja. Teraz możesz się zalogować.";
             }
 
         }
     }
 
-    function checkActivate($userID) {
+    function checkActivate($userID)
+    {
 
         $activateTab = $this->db->query("SELECT `code` FROM  `users` WHERE  `userID` LIKE '$userID' ");
 
         $activateTab = $activateTab->fetch_assoc();
 
-        if($activateTab['code'] == 'active') {
+        if ($activateTab['code'] == 'active') {
             return true;
         } else {
             return false;

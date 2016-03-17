@@ -92,9 +92,9 @@
     </nav>
 </div>
 
+<div class="container" style="padding: 100px">
 
-<div class="container" style="padding-top: 100px">
-    <div class="jumbotron">
+
 <?php
 /**
  * Created by PhpStorm.
@@ -108,17 +108,10 @@ session_save_path('session/');
 session_start();
 
 
-
-
-
 include 'src/Pictures.php';
 include 'src/Users.php';
 
 ////Testowe wyświetlanie zmiennych///
-
-
-
-
 
 
 //////////////// Produkty//
@@ -158,7 +151,7 @@ if(isset($_POST['log'])) {
 // wyświetlanie logowania i rejestracji
 if(isset($_GET['page'])) {
     if($_GET['page'] == "login") {
-        echo "Login";
+
         //$product->writeForm();
         $user->writeForm();
 
@@ -176,11 +169,6 @@ if(isset($_GET['activate'])) {
 }
 
 
-
-
-
-
-
 if(isset($_GET['picture'])) {
     $picture = $_GET['picture'];
     $product->onePicture($picture);
@@ -195,7 +183,7 @@ if(isset($_SESSION['userID'])) {
 
             if(isset($_GET['page'])) {
                 if($_GET['page'] == "add") {
-                    echo "Login";
+
                     $product->writeForm();
 
                 }
@@ -241,10 +229,13 @@ if($_GET['category'] == 'top') {
     $product->showPictureTop($product->cutterMin($page), 5);
 }
 ?>
-    </div>
 
 
-    <div class="jumbotron" style="text-align: center">
+</div>
+    <div class="container">
+        <div class="row jumbotron" style="text-align: center">
+            <div class="col-md-2"></div>
+                <div class="col-md-6">
 <?php
 
 if(!(($page=='add') || isset($_GET['picture']))) {
@@ -268,15 +259,11 @@ if(!(($page=='add') || isset($_GET['picture']))) {
 
 }
 ?>
-
-    </div>
-    <?php
-
-    echo date('Y-m-d H:i:s'); // 2009-07-09 22:30:59
-    ?>
-    </div>
-
-
+            </div>
+            <div class="col-md-2"></div>
+        </div>
 </div>
+
+
 </body>
 </html>
