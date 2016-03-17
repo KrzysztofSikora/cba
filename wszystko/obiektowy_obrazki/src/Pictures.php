@@ -505,33 +505,43 @@ ENT_DISALLOWED;
 
     function showPictureTop($min, $max)
     {
-        // pokazuje od elementu do ile elementów
-        echo '<div style="text-align: center">';
 
         foreach ($this->db->query("SELECT * FROM `pictures` ORDER BY likes DESC LIMIT $min, $max") as $result) {
 
-//            echo '<div class="embed-responsive embed-responsive-4by3">
-//  <iframe class="embed-responsive-item" src="data:image/jpeg;base64,'.base64_encode( $result['img'] ).'"></iframe>
-//</div>';
-            echo 'metoda schowPictureTop';
-            echo '<a href="?picture=' . $result['imageID'] . '"><img src="data:image/jpeg;base64,' . base64_encode($result['img']) . '" class="img-responsive center-block" style="text-align=center"/></a>' . '<br>';
-            echo 'imageID: ' . $result['imageID'] . '<br>';
-            echo 'userID: ' . $result['userID'] . '<br>';
-            echo 'category: ' . $result['category'] . '<br>';
-            echo 'primaryName: ' . $result['primaryName'] . '<br>';
-            echo 'description: ' . $result['description'] . '<br>';
-            echo 'likes: ' . $result['likes'] . '<br>';
-            echo 'imgName: ' . $result['imgName'] . '<br><br><br>';
+            echo  '<div class="row jumbotron">
 
-            echo '<div class="fb-comments" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] . '"' .
-                ' data-numposts="5"></div><br><br>';
+        <div class="thumbnail" style="text-align: center">
+            <a href="?picture=' . $result['imageID'] . '"><img
+                    src="data:image/jpeg;base64,' . base64_encode($result['img']) . '"
+                    class="img-responsive center-block"/></a><br>
 
-            echo '<div class="fb-like" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] . '"' .
-                'data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div> <br><br><br>';
+            <h3> '.$result['description'].'</h3>
+            <p>
+                <button type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>'.$result['likes'].' Like
+                </button>
+                <button type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>'.$result['userID'].' Dodał
+                </button>
+                <button type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
+                </button>
+                <button type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
+                </button>
+                <button type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
+                </button>
 
-            echo 'Liczba komenatrzy w commentBoxie wynosi:' .
-                $this->commentBoxCounter('krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID']);
+                <div class="fb-comments" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] . '"' .
+                ' data-numposts="5"></div><br><br>
+
+            </p>
+            </div>
+        </div>';
         }
-        echo "</div>";
     }
 }
