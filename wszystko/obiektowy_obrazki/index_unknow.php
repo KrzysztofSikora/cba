@@ -92,7 +92,7 @@
     </nav>
 </div>
 
-<div class="container" style="padding: 100px">
+<div class="container" style="padding-top: 10%;">
 
 
 <?php

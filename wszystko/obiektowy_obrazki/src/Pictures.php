@@ -416,9 +416,6 @@ ENT_DISALLOWED;
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
                 </button>
-                <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
-                </button>
 
                 <div class="fb-comments" data-href="http://krzysztofsikora24.pl/wszystko/obiektowy_obrazki/?picture=' . $result['imageID'] . '"' .
                 ' data-numposts="5"></div><br><br>
