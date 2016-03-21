@@ -78,21 +78,21 @@
             <li role="presentation"><a href="?category=natura">Natura</a></li>
             <li role="presentation"><a href="?category=nieporawni">Nieporawni</a></li>
             <li role="presentation"><a href="?category=inne">Inne</a></li>
-<!--            <li role="presentation"><a href="#">Messages</a></li>-->
+            <li role="presentation"><a href="?category=rule">Regulamin</a></li>
+        <li><form class="navbar-form navbar-left" role="search" method="get" action="index_unknow.php"></li>
 
-        <li><form class="navbar-form navbar-left" role="search" method="get" action="index_unknow.php">
-
-            <button type="submit" class="btn btn-default" name="category" value="search">Szukaj</button>
-            <div class="form-group">
+           <li><button type="submit" class="btn btn-default" name="category" value="search">Szukaj</button>
+            </li>
+            <li><div class="form-group">
                 <input type="text" class="form-control" placeholder="w opisie" name="searchValue">
             </div></li>
-            <li role="presentation"><a href="?category=rule">Regulamin</a></li>
+
         </ul>
         </form>
     </nav>
 </div>
 
-<div class="container" style="padding-top: 10%;">
+<div class="container" style="padding-top: 100px;">
 
 
 <?php

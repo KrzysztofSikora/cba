@@ -247,29 +247,51 @@ ENT_DISALLOWED;
 
     }
 
+    function showPictureProto($imageID)
+    {
+
+
+        foreach ($this->db->query("SELECT * FROM `pictures` WHERE imageID = '$imageID'") as $result) {
+
+            echo  '<div class="row jumbotron">
+
+            <img
+                    src="data:image/jpeg;base64,' . base64_encode($result['img']) . '"
+                    class="img-responsive center-block"/></a><br>';
+
+        }
+
+
+
+
+
+
+
+    }
+
     function showPicture($min, $max)
     {
 
 
         foreach ($this->db->query("SELECT * FROM `pictures` LIMIT $min, $max") as $result) {
 
-            echo  '<div class="row jumbotron">
+            echo '<div class="row jumbotron">
 
         <div class="thumbnail" style="text-align: center">
             <a href="?picture=' . $result['imageID'] . '"><img
                     src="data:image/jpeg;base64,' . base64_encode($result['img']) . '"
                     class="img-responsive center-block"/></a><br>
 
-            <h3> '.$result['description'].'</h3>
+            <h3> ' . $result['description'] . '</h3>
             <p>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>'.$result['likes'].' Like
+                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>' . $result['likes'] . ' Like
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>'.$result['userID'].' Dodał
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>' . $result['userID'] . ' Dodał
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
@@ -296,23 +318,23 @@ ENT_DISALLOWED;
 
         foreach ($this->db->query("SELECT * FROM `pictures` WHERE category LIKE '$category' LIMIT $min, $max") as $result) {
 
-            echo  '<div class="row jumbotron">
+            echo '<div class="row jumbotron">
 
         <div class="thumbnail" style="text-align: center">
             <a href="?picture=' . $result['imageID'] . '"><img
                     src="data:image/jpeg;base64,' . base64_encode($result['img']) . '"
                     class="img-responsive center-block"/></a><br>
 
-            <h3> '.$result['description'].'</h3>
+            <h3> ' . $result['description'] . '</h3>
             <p>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>'.$result['likes'].' Like
+                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>' . $result['likes'] . ' Like
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>'.$result['userID'].' Dodał
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>' . $result['userID'] . ' Dodał
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
@@ -341,23 +363,23 @@ ENT_DISALLOWED;
 
         foreach ($this->db->query("SELECT * FROM `pictures` WHERE description LIKE '%$description%' LIMIT $min, $max") as $result) {
 
-            echo  '<div class="row jumbotron">
+            echo '<div class="row jumbotron">
 
         <div class="thumbnail" style="text-align: center">
             <a href="?picture=' . $result['imageID'] . '"><img
                     src="data:image/jpeg;base64,' . base64_encode($result['img']) . '"
                     class="img-responsive center-block"/></a><br>
 
-            <h3> '.$result['description'].'</h3>
+            <h3> ' . $result['description'] . '</h3>
             <p>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>'.$result['likes'].' Like
+                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>' . $result['likes'] . ' Like
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>'.$result['userID'].' Dodał
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>' . $result['userID'] . ' Dodał
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
@@ -392,23 +414,23 @@ ENT_DISALLOWED;
         foreach ($this->db->query("SELECT * FROM `pictures` ORDER BY dataAdd DESC LIMIT $min, $max") as $result) {
 
 
-            echo  '<div class="row jumbotron">
+            echo '<div class="row jumbotron">
 
         <div class="thumbnail" style="text-align: center">
             <a href="?picture=' . $result['imageID'] . '"><img
                     src="data:image/jpeg;base64,' . base64_encode($result['img']) . '"
                     class="img-responsive center-block"/></a><br>
 
-            <h3> '.$result['description'].'</h3>
+            <h3> ' . $result['description'] . '</h3>
             <p>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>'.$result['likes'].' Like
+                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>' . $result['likes'] . ' Like
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>'.$result['userID'].' Dodał
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>' . $result['userID'] . ' Dodał
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
@@ -505,23 +527,23 @@ ENT_DISALLOWED;
 
         foreach ($this->db->query("SELECT * FROM `pictures` ORDER BY likes DESC LIMIT $min, $max") as $result) {
 
-            echo  '<div class="row jumbotron">
+            echo '<div class="row jumbotron">
 
         <div class="thumbnail" style="text-align: center">
             <a href="?picture=' . $result['imageID'] . '"><img
                     src="data:image/jpeg;base64,' . base64_encode($result['img']) . '"
                     class="img-responsive center-block"/></a><br>
 
-            <h3> '.$result['description'].'</h3>
+            <h3> ' . $result['description'] . '</h3>
             <p>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>'.$result['likes'].' Like
+                    <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>' . $result['likes'] . ' Like
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>'.$result['userID'].' Dodał
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>' . $result['userID'] . ' Dodał
                 </button>
                 <button type="button" class="btn btn-default btn-xs">
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>ilosc
