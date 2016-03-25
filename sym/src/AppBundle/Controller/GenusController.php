@@ -21,4 +21,4 @@ class GenusController
     }
 }
 
-// test
+// tests
