@@ -1,0 +1,8 @@
+my_helloworld:
+    resource: "@MyHelloworldBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
