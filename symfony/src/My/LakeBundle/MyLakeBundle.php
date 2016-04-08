@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle;
+namespace My\LakeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AppBundle extends Bundle
+class MyLakeBundle extends Bundle
 {
 }

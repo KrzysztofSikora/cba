@@ -1,6 +1,17 @@
 _homepage:
     pattern: /
-    defaults: { _controller: MyValleyBundle:Default:index }
+    defaults: { _controller: MyLakeBundle:Default:index }
+
+my_lakee:
+    resource: "@MyLakeeBundle/Resources/config/routing.xml"
+    prefix:   /
+
+my_lake:
+    resource: "@MyLakeBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
 
 my_valley:
     resource: "@MyValleyBundle/Controller/"
