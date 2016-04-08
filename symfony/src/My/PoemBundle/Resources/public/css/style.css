@@ -1,0 +1,36 @@
+body {
+    background: #e8edef url('../images/gora.png') repeat-x;
+    margin: 0;
+font-family: Georgia, serif;
+
+
+}
+
+#pojemnik {
+    width: 1000px;
+    background: url('../images/pojemnik.png') repeat-y;
+    margin: 0 auto;
+    padding: 0;
+
+}
+
+#naglowek {
+    height: 220px;
+    width: 1000px;
+    margin: 0;
+    padding: 0;
+    background: url('../images/naglowek.png') no-repeat;
+    text-indent: -2000em;
+
+}
+
+#tekst {
+    padding: 50px 300px;
+    line-height: 200%;
+}
+
+#dol {
+    height: 80px;
+    width: 1000px;
+    background: url('../images/stopka.png') no-repeat;
+}

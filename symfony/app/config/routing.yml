@@ -1,6 +1,13 @@
 _homepage:
     pattern: /
-    defaults: { _controller: MyLakeBundle:Default:index }
+    defaults: { _controller: MyPoemBundle:Default:index }
+
+my_poem:
+    resource: "@MyPoemBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
 
 my_lakee:
     resource: "@MyLakeeBundle/Resources/config/routing.xml"
