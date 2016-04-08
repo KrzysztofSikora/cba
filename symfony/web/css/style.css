@@ -1,0 +1,30 @@
+body {
+    margin: 50px;
+    background: #1d1d1d;
+    font-family: Georgia, serif;
+    text-align: center;
+    color: #d3d3d3;
+}
+h2 {
+    font-style: italic;
+}
+img {
+   border: 1px solid #ffffff;
+}
+
+div {
+    width: 200px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 70%;
+    font-style: italic;
+}
+
+a {
+    text-decoration: none;
+    color: #d3d3d3;
+}
+
+a:hover {
+    text-decoration: underline;
+}
