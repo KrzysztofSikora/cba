@@ -19,8 +19,8 @@ class AppKernel extends Kernel
             new My\HelloworldBundle\MyHelloworldBundle(),
             new My\ValleyBundle\MyValleyBundle(),
             new My\LakeBundle\MyLakeBundle(),
-            new My\LakeeBundle\MyLakeeBundle(),
             new My\PoemBundle\MyPoemBundle(),
+            new My\FraszkaBundle\MyFraszkaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

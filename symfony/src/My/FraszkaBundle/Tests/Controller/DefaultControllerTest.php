@@ -1,6 +1,6 @@
 <?php
 
-namespace My\LakeeBundle\Tests\Controller;
+namespace My\FraszkaBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

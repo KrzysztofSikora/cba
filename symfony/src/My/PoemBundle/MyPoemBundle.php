@@ -1,9 +1,9 @@
 <?php
 
-namespace My\LakeeBundle;
+namespace My\PoemBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MyLakeeBundle extends Bundle
+class MyPoemBundle extends Bundle
 {
 }
