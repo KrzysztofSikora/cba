@@ -1,6 +1,23 @@
 _homepage:
     pattern: /
-    defaults: { _controller: MyZabytekBundle:Brama:index }
+    defaults: { _controller: MyLoremBundle:Default:index }
+
+my_dolor:
+    resource: "@MyDolorBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+my_ipsum:
+    resource: "@MyIpsumBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+my_lorem:
+    resource: "@MyLoremBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
 
 my_zabytek:
     resource: "@MyZabytekBundle/Controller/"

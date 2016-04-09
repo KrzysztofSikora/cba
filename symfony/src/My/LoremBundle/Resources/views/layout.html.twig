@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Piosenki dla dzieci</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{{ asset('bundles/mylorem/css/style.css') }}" />
+    <script src="{{ asset('bundles/mylorem/js/jquery-1.6.4.min.js') }}"></script>
+    <script src="{{ asset('bundles/mylorem/js/animacja.js') }}"></script>
+</head>
+<body>
+<div id="pojemnik">
+    <h1 id="naglowek">Piosenki dla dzieci<span>&nbsp;</span></h1>
+    <ul id="menuglowne">
+        <li><a href="{{ path('_misie') }}">Jadą, jadą misie</a></li>
+        <li><a href="{{ path('_kolko') }}">Kółko graniaste</a></li>
+        <li><a href="{{ path('_ojciec') }}">Ojciec i syn</a></li>
+    </ul>
+    <div id="tresc">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>

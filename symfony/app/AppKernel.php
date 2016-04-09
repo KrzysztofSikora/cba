@@ -22,6 +22,9 @@ class AppKernel extends Kernel
             new My\PoemBundle\MyPoemBundle(),
             new My\FraszkaBundle\MyFraszkaBundle(),
             new My\ZabytekBundle\MyZabytekBundle(),
+            new My\LoremBundle\MyLoremBundle(),
+            new My\IpsumBundle\MyIpsumBundle(),
+            new My\DolorBundle\MyDolorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
