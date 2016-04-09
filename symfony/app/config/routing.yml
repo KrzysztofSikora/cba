@@ -1,6 +1,12 @@
 _homepage:
     pattern: /
-    defaults: { _controller: MyFraszkaBundle:Default:dogoscia }
+    defaults: { _controller: MyZabytekBundle:Brama:index }
+
+my_zabytek:
+    resource: "@MyZabytekBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 
 
 my_fraszka:

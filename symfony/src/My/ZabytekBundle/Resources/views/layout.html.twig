@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zabytki Lublina</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{{ asset('bundles/myzabytek/css/style.css') }}" />
+</head>
+<body>
+<div id="pojemnik">
+    <h1>Zabytki Lublina</h1>
+    <div id="menu">
+        <a href="{{ path('url_zamek') }}">Zamek Królewski</a>
+        <a href="{{ path('url_brama') }}">Brama Krakowska</a>
+        <a href="{{ path('url_wieza') }}">Wieża Trynitarska</a>
+    </div>
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
